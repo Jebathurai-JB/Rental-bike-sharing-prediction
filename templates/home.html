@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="{{url_for('static', filename='images/bycicle.png')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Rental Bike Sharing</title>
+</head>
+
+
+<body>
+
+	<script type="text/javascript">
+
+    function cambiar_login() {
+      document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_login";  
+      document.querySelector('.cont_form_login').style.display = "block";
+      document.querySelector('.cont_form_sign_up').style.opacity = "0";               
+      setTimeout(function() {  
+        document.querySelector('.cont_form_login').style.opacity = "1"; 
+      }, 400);  
+      setTimeout(function() {    
+        document.querySelector('.cont_form_sign_up').style.display = "none";
+      }, 200); 
+      
+      // Submit the login form
+      const loginForm = document.getElementById('login-form');
+      loginForm.submit();
+    }
+
+	function cambiar_sign_up(at) {
+	  document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_sign_up";
+	  document.querySelector('.cont_form_sign_up').style.display = "block";
+	document.querySelector('.cont_form_login').style.opacity = "0";
+	  
+	setTimeout(function(){  document.querySelector('.cont_form_sign_up').style.opacity = "1";
+	},100);  
+
+	setTimeout(function(){   document.querySelector('.cont_form_login').style.display = "none";
+	},400);  
+
+	// Submit the sign-up form
+	const signUpForm = document.getElementById('signup-form');
+	signUpForm.submit();
+	}    
+
+
+
+	function ocultar_login_sign_up() {
+
+	document.querySelector('.cont_forms').className = "cont_forms";  
+	document.querySelector('.cont_form_sign_up').style.opacity = "0";               
+	document.querySelector('.cont_form_login').style.opacity = "0"; 
+
+	setTimeout(function(){
+	document.querySelector('.cont_form_sign_up').style.display = "none";
+	document.querySelector('.cont_form_login').style.display = "none";
+	},500);  
+	  
+	  }
+	</script>
+
+
+	<script type="text/javascript">
+		
+		function goHome() {
+		  window.location.href = "/"; 
+		}
+	</script>
+
+	<div class="cotn_principal">
+	<div class="cont_centrar">
+
+	  <div class="cont_login">
+	<div class="cont_info_log_sign_up">
+	      <div class="col_md_login">
+	<div class="cont_ba_opcitiy">
+	        
+	  <h2>DAY</h2> 
+  	  {% if prediction and category == 'day' %}       
+	  <p>prediction of the number of demand for a day: {{prediction}}</p> 
+	  <button onclick="goHome()" class="btn_login" onclick="cambiar_login()">TRY AGAIN</button>
+	  {% else %}
+	  <p>predict the number of demand for day</p> 
+	  <button class="btn_login" onclick="cambiar_login()">PREDICT</button>
+	  {% endif %}
+	  </div>
+	  </div>
+
+	<div class="col_md_sign_up">
+	<div class="cont_ba_opcitiy">
+
+	  <h2>HOUR</h2>
+	  {% if prediction and category == 'hour' %}
+	  <p>prediction of the number of demand for an hour: {{prediction}}</p>
+	  <button onclick="goHome()" class="btn_sign_up" onclick="cambiar_login()">TRY AGAIN</button>
+	  {% else %}
+	  <p>predict the number of demand for an hour</p>
+	  <button class="btn_sign_up" onclick="cambiar_sign_up()">PREDICT</button>
+	  {% endif %}
+	</div>
+	  </div>
+	       </div>
+	    
+	    <div class="cont_back_info">
+	       <div class="cont_img_back_grey">
+	       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
+	       </div>
+	       
+	    </div>
+	<div class="cont_forms" >
+	    <div class="cont_img_back_">
+	       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"  alt="" />
+	       </div>
+
+	<form name="day-form" class="day-form" id="day-form" action="#" method="POST">
+	<div class="cont_form_login">
+	<a href="#" onclick="ocultar_login_sign_up()"><i class="fa fa-angle-double-left" style="font-size:24px"></i></a>
+	   <h2>DAY</h2>
+
+		<input type="date" name="date" placeholder="Date" required />
+		<select name="holiday" required>
+		    <option value=""  style="text-align: left;">Holiday</option>
+		    <option value="0" style="text-align: left;">No</option>
+		    <option value="1" style="text-align: left;">Yes</option>
+		</select>
+		<select name="weather" required>
+		    <option value=""  style="text-align: left;">Weather Situation</option>
+		    <option value="1" style="text-align: left;">Clear</option>
+		    <option value="2" style="text-align: left;">Mist + Cloudy</option>
+		    <option value="3" style="text-align: left;">Light Rain + Scattered clouds</option>
+		    <option value="4" style="text-align: left;">Heavy Rain + Ice Pallets + Thunderstorm + Mist</option>
+		</select>
+		<input type="number" step=0.0001 name="temp" placeholder="Temperature" required />
+		<input type="number" step=0.0001 name="hum" placeholder="Humidity" required />
+		<input type="number" step=0.0001 name="windspeed" placeholder="Windspeed" required />
+		<button name="day" class="btn_login" onclick="cambiar_login()">PREDICT</button>
+	</div>
+	</form>
+	
+	<form name="hour-form" class="hour-form" id="hour-form" action="#" method="POST">
+	<div class="cont_form_sign_up">
+	<a href="#" onclick="ocultar_login_sign_up()"><i class="fa fa-angle-double-left" style="font-size:24px"></i></a>
+	     <h2>HOUR</h2>
+
+	<input type="datetime-local" name='date' placeholder="Date" required />
+	<select name="holiday" required>
+	    <option value="" style="text-align: left;">Holiday</option>
+	    <option value="0" style="text-align: left;">No</option>
+	    <option value="1" style="text-align: left">Yes</option>
+	</select>
+	<select name="weather" required>
+	    <option value="" style="text-align: left;">Weather Situation</option>
+	    <option value="1" style="text-align: left;">Clear</option>
+	    <option value="2" style="text-align: left;">Mist + Cloudy</option>
+	    <option value="3" style="text-align: left;">Light Rain + Scattered clouds</option>
+	    <option value="4" style="text-align: left;">Heavy Rain + Ice Pallets + Thunderstorm + Mist</option>
+	</select>
+	<input type="number" step=0.0001 name="temp" placeholder="Temperature" required />
+	<input type="number" step=0.0001 name="hum" placeholder="Humidity" required />
+	<input type="number" step=0.0001 name="windspeed" placeholder="Windspeed" required />
+	<button name="hour" class="btn_sign_up" onclick="cambiar_sign_up()">PREDICT</button>
+	</div>
+	</form>
+
+	    </div>
+	    
+	  </div>
+	 </div>
+	</div>
+
+</body>
+</html>
+
+
+
+
